@@ -40,7 +40,6 @@ Todos.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     todolist: state.todos.todolist,
     text: state.todos.text

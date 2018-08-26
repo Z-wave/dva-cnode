@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button, Input, Table, Divider } from 'antd';
-import * as styles from './Todos.css';
+import { Button, Input, Table, Divider,Row,Col } from 'antd';
 
 const TodoList = ({ onDelete, onAdd, todolist, onChange, text, onUpdate }) => {
   const columns = [{
     title: 'name',
     dataIndex: 'name',
-    key: 'name',
+    key: 'id',
   }, {
     title: 'Action',
     dataIndex: '',
@@ -19,10 +18,14 @@ const TodoList = ({ onDelete, onAdd, todolist, onChange, text, onUpdate }) => {
   },];
   return (
     <div>
-      <div>
-        <Input className={styles.inputText} onChange={(e)=>onChange(e.target.value)} value={text}/> &nbsp;
-        <Button onClick={()=>onAdd(text)} icon='plus' type='primary'>添加</Button>
-      </div>
+      <Row>
+        <Col span={6}>
+            <Input onChange={(e)=>onChange(e.target.value)} value={text}/> &nbsp;
+        </Col>
+        <Col span={4}>
+            <Button onClick={()=>onAdd(text)} icon='plus' type='primary'>添加</Button>
+        </Col>
+      </Row>
       <Table columns={columns} dataSource={todolist}/>
     </div>
   );
