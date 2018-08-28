@@ -8,7 +8,7 @@ function Index({dispatch,data}){
     function callback(key){
         dispatch({ 
             type: 'index/get', 
-            payload: {tab:key,page:1,limit:10} 
+            payload: {tab:key,page:1} 
         });
     }
 

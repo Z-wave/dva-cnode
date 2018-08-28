@@ -6,19 +6,31 @@ export default {
         data:[],
         tab:'all',
         page:1,
-        limit:10
+        limit:10,
+        more:true
     },
     reducers: {
         getList(state, action) {
             let {data,tab,page,limit} = action.payload
-            return {...state,data};
+            if(tab !== state.tab){
+                state.data = []
+            }
+            state.tab = tab
+            state.page = page
+            state.limit = limit
+            return {...state,data:state.data.concat(data)};
         }
     },
     effects: {
-        *get({ payload:{tab,page,limit} }, { call, put }) {
-            const data = yield request(`/v1/topics?tab=${tab}&page=${page}&limit=${limit}`)
+        *get({ payload:{tab,page,limit} }, { call, put, select }) {
+            const model = yield select(state => state.index)
+            const useTab = tab ? tab : model.tab
+            const usePage = page ? page : model.page
+            const useLimit = limit ? limit : model.limit
+
+            const data = yield request(`/v1/topics?tab=${useTab}&page=${usePage}&limit=${useLimit}`)
             
-            yield put({ type: 'getList',payload:{data:data.data.data} });
+            yield put({ type: 'getList',payload:{data:data.data.data,tab:useTab,page:usePage,limit:useLimit} });
         }
     },
     subscriptions: {

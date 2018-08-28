@@ -17,3 +17,10 @@ export function formatDate(str) {
         return window.parseInt(time / 31536000000) + '年前';
     }
 }
+
+export function isBottom(){
+    const { scrollTop } = document.documentElement || document.body
+    const { clientHeight, scrollHeight } = document.documentElement;
+
+    return (scrollTop + clientHeight + 40) >= scrollHeight
+}
